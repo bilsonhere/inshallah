@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For Afrah, With Clarity</title>
+    <style>
+        /* Base Styles */
+        :root {
+            --pastel-pink: #ffd6e0;
+            --beige: #f5e6d8;
+            --cream: #fff9f0;
+            --soft-gray: #f0f0f0;
+            --text-color: #5a5a5a;
+            --accent-color: #d4a5a5;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--cream);
+            color: var(--text-color);
+            line-height: 1.6;
+            overflow-x: hidden;
+            transition: background-color 0.5s ease;
+        }
+
+        /* Font Import */
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Quicksand:wght@300;400;500&display=swap');
+
+        /* Layout */
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+            min-height: 100vh;
+        }
+
+        /* Header */
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        h1 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.5rem;
+            color: var(--accent-color);
+            margin-bottom: 1rem;
+        }
+
+        .intro-text {
+            font-family: 'Quicksand', sans-serif;
+            font-weight: 300;
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto 2rem;
+        }
+
+        /* Sections */
+        .section {
+            background-color: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.03);
+            margin-bottom: 2rem;
+            display: none;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease;
+            background-color: var(--pastel-pink);
+        }
+
+        .section.visible {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .section:nth-child(even) {
+            background-color: var(--beige);
+        }
+
+        /* Form Elements */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            font-family: 'Quicksand', sans-serif;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            color: var(--text-color);
+        }
+
+        input[type="text"],
+        textarea {
+            width: 100%;
+            padding: 1rem;
+            border: 1px solid #e0e0e0;
+            border-radius: 10px;
+            font-family: 'Quicksand', sans-serif;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background-color: rgba(255, 255, 255, 0.7);
+        }
+
+        textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        input[type="text"]:focus,
+        textarea:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 2px rgba(212, 165, 165, 0.2);
+        }
+
+        .radio-group {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .radio-option {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 50px;
+            font-family: 'Quicksand', sans-serif;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background-color: var(--accent-color);
+            color: white;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .btn-block {
+            display: block;
+            width: 100%;
+        }
+
+        .btn-submit {
+            margin-top: 1rem;
+        }
+
+        /* Final Message */
+        .final-message {
+            text-align: center;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            margin-top: 3rem;
+            padding: 1rem;
+            font-family: 'Quicksand', sans-serif;
+            font-size: 0.8rem;
+            color: var(--text-color);
+            opacity: 0.7;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 1.5rem;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            .intro-text {
+                font-size: 1rem;
+            }
+
+            .section {
+                padding: 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 1rem;
+            }
+
+            h1 {
+                font-size: 1.8rem;
+            }
+
+            .btn {
+                padding: 0.6rem 1.2rem;
+            }
+
+            .radio-group {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>For Afrah, With Clarity</h1>
+            <p class="intro-text">Hi Afrah. If it's easier this way, I'm here to listen. Take your time.</p>
+        </header>
+
+        <!-- Introduction Section -->
+        <div id="intro-section" class="section visible">
+            <div class="form-group">
+                <label for="name">Your name (optional):</label>
+                <input type="text" id="name" placeholder="If you'd like to share...">
+            </div>
+            
+            <div class="form-group">
+                <p>Are you in a good space to begin this?</p>
+                <div class="radio-group">
+                    <label class="radio-option">
+                        <input type="radio" name="ready" value="yes" checked> Yes
+                    </label>
+                    <label class="radio-option">
+                        <input type="radio" name="ready" value="no"> No
+                    </label>
+                </div>
+            </div>
+            
+            <button id="begin-btn" class="btn btn-block">Begin When You're Ready</button>
+        </div>
+
+        <!-- Question 1 -->
+        <div id="question-1" class="section">
+            <div class="question-text">What made you distance yourself lately?</div>
+            <textarea placeholder="Your thoughts..." required></textarea>
+            <button class="btn btn-block btn-submit">Continue</button>
+        </div>
+
+        <!-- Question 2 -->
+        <div id="question-2" class="section">
+            <div class="question-text">Do you think of me sometimes?</div>
+            <textarea placeholder="Your thoughts..." required></textarea>
+            <button class="btn btn-block btn-submit">Continue</button>
+        </div>
+
+        <!-- Question 3 -->
+        <div id="question-3" class="section">
+            <div class="question-text">Do you feel our story is over or paused?</div>
+            <textarea placeholder="Your thoughts..." required></textarea>
+            <button class="btn btn-block btn-submit">Continue</button>
+        </div>
+
+        <!-- Question 4 -->
+        <div id="question-4" class="section">
+            <div class="question-text">Was there anything I said or did that hurt you unknowingly?</div>
+            <textarea placeholder="Your thoughts..." required></textarea>
+            <button class="btn btn-block btn-submit">Continue</button>
+        </div>
+
+        <!-- Question 5 -->
+        <div id="question-5" class="section">
+            <div class="question-text">Is there anything you wish I understood better about you?</div>
+            <textarea placeholder="Your thoughts..." required></textarea>
+            <button class="btn btn-block btn-submit">Continue</button>
+        </div>
+
+        <!-- Question 6 -->
+        <div id="question-6" class="section">
+            <div class="question-text">What's something you'd want me to know, if you felt completely safe sharing?</div>
+            <textarea placeholder="Your thoughts..." required></textarea>
+            <button class="btn btn-block btn-submit">Continue</button>
+        </div>
+
+        <!-- Final Message -->
+        <div id="final-section" class="section">
+            <div class="final-message">
+                <p>You don't owe answers, but they'd mean the world to me. Thank you for even reading this far.</p>
+                <button id="submit-all-btn" class="btn btn-block" disabled>Send Your Thoughts</button>
+            </div>
+        </div>
+
+        <footer>
+            Built with care by Bilson, August 2025
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // DOM Elements
+            const sections = document.querySelectorAll('.section');
+            const beginBtn = document.getElementById('begin-btn');
+            const submitAllBtn = document.getElementById('submit-all-btn');
+            const readyRadio = document.querySelector('input[name="ready"]:checked');
+            const textareas = document.querySelectorAll('textarea');
+            
+            // Track current section
+            let currentSection = document.getElementById('intro-section');
+            let currentSectionIndex = 0;
+            
+            // Initialize
+            setupEventListeners();
+            
+            function setupEventListeners() {
+                // Begin button click handler
+                beginBtn.addEventListener('click', function() {
+                    const readyValue = document.querySelector('input[name="ready"]:checked').value;
+                    
+                    if (readyValue === 'yes') {
+                        navigateToNextSection();
+                    } else {
+                        alert("I understand. Please come back whenever you feel ready.");
+                    }
+                });
+                
+                // Submit button handlers for each question
+                document.querySelectorAll('.btn-submit').forEach(button => {
+                    button.addEventListener('click', function() {
+                        const section = this.closest('.section');
+                        const textarea = section.querySelector('textarea');
+                        
+                        if (textarea.value.trim() === '') {
+                            alert("Please share your thoughts before continuing.");
+                            return;
+                        }
+                        
+                        navigateToNextSection();
+                    });
+                });
+                
+                // Submit all answers button
+                submitAllBtn.addEventListener('click', submitAllAnswers);
+                
+                // Textarea input handlers
+                textareas.forEach(textarea => {
+                    textarea.addEventListener('input', function() {
+                        // Enable submit all button if all questions are answered
+                        const allAnswered = Array.from(textareas).every(ta => ta.value.trim() !== '');
+                        submitAllBtn.disabled = !allAnswered;
+                    });
+                });
+            }
+            
+            function navigateToNextSection() {
+                // Hide current section
+                currentSection.classList.remove('visible');
+                
+                // Move to next section
+                currentSectionIndex++;
+                
+                if (currentSectionIndex < sections.length) {
+                    currentSection = sections[currentSectionIndex];
+                    currentSection.classList.add('visible');
+                    
+                    // Scroll to the new section
+                    currentSection.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'center'
+                    });
+                }
+            }
+            
+            function submitAllAnswers() {
+                // Collect all data
+                const formData = {
+                    name: document.getElementById('name').value,
+                    ready: document.querySelector('input[name="ready"]:checked').value,
+                    answers: []
+                };
+                
+                // Get all questions and answers
+                document.querySelectorAll('.section[id^="question-"]').forEach(section => {
+                    const question = section.querySelector('.question-text').textContent;
+                    const answer = section.querySelector('textarea').value;
+                    
+                    formData.answers.push({
+                        question: question,
+                        answer: answer
+                    });
+                });
+                
+                // TODO: Firebase submit here
+                console.log('Form data to be submitted:', formData);
+                
+                // Show confirmation
+                alert("Thank you for sharing your thoughts. They mean more than you know.");
+                
+                // Disable the submit button after submission
+                submitAllBtn.disabled = true;
+                submitAllBtn.textContent = 'Sent with gratitude ❤️';
+            }
+        });
+    </script>
+</body>
+</html>
