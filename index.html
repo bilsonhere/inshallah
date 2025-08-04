@@ -571,229 +571,202 @@
 
 
     <script type="module">
-        // ✅ Firebase imports
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-        import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-        import { firebaseConfig } from './firebase-config.js'; // ✅ your masked config file
+  // Firebase imports
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  import { firebaseConfig } from './firebase-config.js';
 
-        // ✅ Initialize Firebase app and Firestore
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
 
-        // ✅ Everything else runs after DOM loads
-        document.addEventListener('DOMContentLoaded', function() {
-            // DOM Elements
-            const sections = document.querySelectorAll('.section');
-            const nameInput = document.getElementById('name');
-            const bgAudio = document.getElementById('bg-audio');
+  document.addEventListener('DOMContentLoaded', function() {
+    // Get all sections in order
+    const sections = [
+      document.getElementById('name-section'),
+      document.getElementById('welcome-section'),
+      document.getElementById('ready-section'),
+      document.getElementById('question-1'),
+      document.getElementById('question-2'),
+      document.getElementById('question-3'),
+      document.getElementById('question-4'),
+      document.getElementById('question-5'),
+      document.getElementById('question-6'),
+      document.getElementById('final-section'),
+      document.getElementById('thank-you-section')
+    ];
 
-// Play audio after any first user interaction
-function enableAudioOnce() {
-    bgAudio.load();
-    bgAudio.play().catch(e => {
-        console.log("Autoplay failed, will try again after next interaction.");
-    });
-    document.removeEventListener('click', enableAudioOnce);
-    document.removeEventListener('keydown', enableAudioOnce);
-}
+    // DOM elements
+    const nameInput = document.getElementById('name');
+    const nameSubmitBtn = document.getElementById('name-submit-btn');
+    const personalGreeting = document.getElementById('personal-greeting');
+    const welcomeContinueBtn = document.getElementById('welcome-continue-btn');
+    const readyYesBtn = document.getElementById('ready-yes');
+    const readyNoBtn = document.getElementById('ready-no');
+    const submitAllBtn = document.getElementById('submit-all-btn');
+    const confirmDialog = document.getElementById('confirmation-dialog');
+    const confirmYesBtn = document.getElementById('confirm-yes');
+    const confirmNoBtn = document.getElementById('confirm-no');
+    const textareas = document.querySelectorAll('textarea');
+    const backButtons = document.querySelectorAll('.btn-back');
+    const bgAudio = document.getElementById('bg-audio');
 
+    // Track current section
+    let currentSectionIndex = 0;
+    let userName = '';
 
-// Attach to first user gesture
-document.addEventListener('click', enableAudioOnce);
-document.addEventListener('keydown', enableAudioOnce);
+    // Initialize
+    showCurrentSection();
+    setupEventListeners();
 
-            const nameSubmitBtn = document.getElementById('name-submit-btn');
-            const personalGreeting = document.getElementById('personal-greeting');
-            const welcomeContinueBtn = document.getElementById('welcome-continue-btn');
-            const readyYesBtn = document.getElementById('ready-yes');
-            const readyNoBtn = document.getElementById('ready-no');
-            const submitAllBtn = document.getElementById('submit-all-btn');
-            const confirmDialog = document.getElementById('confirmation-dialog');
-            const confirmYesBtn = document.getElementById('confirm-yes');
-            const confirmNoBtn = document.getElementById('confirm-no');
-            const textareas = document.querySelectorAll('textarea');
-            const backButtons = document.querySelectorAll('.btn-back');
-            
-            // Track current section and last question index
-            let currentSection = document.getElementById('name-section');
-            let currentSectionIndex = 0;
-            let userName = '';
-            
-            // Initialize
-            setupEventListeners();
-            
-            function setupEventListeners() {
-                // Name submit button
-                nameSubmitBtn.addEventListener('click', function() {
-                    if (nameInput.value.trim() === '') {
-                        alert("Pray, grace me with your name to proceed.");
-                        return;
-                    }
-                    
-                    userName = nameInput.value.trim();
-                    personalGreeting.textContent = `My Dearest ${userName}`;
-                    navigateToNextSection();
-                });
-                
-                // Welcome continue button
-                welcomeContinueBtn.addEventListener('click', navigateToNextSection);
-                
-                // Ready buttons
-                readyYesBtn.addEventListener('click', navigateToNextSection);
-                readyNoBtn.addEventListener('click', function() {
-                    alert("I shall await a more auspicious hour. Return when your heart is ready.");
-                });
-                
-                // Question submit buttons
-                document.querySelectorAll('.btn-submit').forEach(button => {
-                    button.addEventListener('click', function() {
-                        const section = this.closest('.section');
-                        const textarea = section.querySelector('textarea');
-                        
-                        if (textarea.value.trim() === '') {
-                            alert("I beseech you, share your thoughts ere we continue.");
-                            return;
-                        }
-                        
-                        navigateToNextSection();
-                    });
-                });
-                
-                // Back buttons
-                backButtons.forEach(button => {
-                    button.addEventListener('click', navigateToPreviousSection);
-                });
-                
-                // Submit all answers button
-                submitAllBtn.addEventListener('click', function() {
-                    confirmDialog.classList.add('visible');
-                    confirmDialog.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                });
-                
-                // Confirmation buttons
-                confirmYesBtn.addEventListener('click', submitAllAnswers);
-                confirmNoBtn.addEventListener('click', function() {
-                    confirmDialog.classList.remove('visible');
-                    // Find first unanswered question or last answered if all complete
-                    let targetQuestion = 0;
-                    for (let i = 0; i < textareas.length; i++) {
-                        if (textareas[i].value.trim() === '') {
-                            targetQuestion = i;
-                            break;
-                        }
-                    }
-                    // If all answered, go to last question
-                    if (targetQuestion === 0 && textareas[0].value.trim() !== '') {
-                        targetQuestion = textareas.length - 1;
-                    }
-                    // +3 to skip name/welcome/ready sections
-                    navigateToSection(3 + targetQuestion); 
-                });
-                
-                // Textarea input handlers
-                textareas.forEach(textarea => {
-                    textarea.addEventListener('input', function() {
-                        const allAnswered = Array.from(textareas).every(ta => ta.value.trim() !== '');
-                        submitAllBtn.disabled = !allAnswered;
-                    });
-                });
-            }
-            
-            function navigateToSection(index) {
-                // Hide current section
-                currentSection.classList.remove('visible');
-                
-                // Set new section
-                currentSectionIndex = index;
-                currentSection = sections[currentSectionIndex];
-                currentSection.classList.add('visible');
-                
-                // Scroll to the section
-                currentSection.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'center'
-                });
-            }
-            
-            function navigateToNextSection() {
-                // Hide current section
-                currentSection.classList.remove('visible');
-                
-                // Move to next section
-                currentSectionIndex++;
-                
-                if (currentSectionIndex < sections.length) {
-                    currentSection = sections[currentSectionIndex];
-                    currentSection.classList.add('visible');
-                    
-                    // Scroll to the new section
-                    currentSection.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'center'
-                    });
-                }
-            }
-            
-            function navigateToPreviousSection() {
-                // Hide current section
-                currentSection.classList.remove('visible');
-                
-                // Move to previous section
-                currentSectionIndex--;
-                
-                if (currentSectionIndex >= 0) {
-                    currentSection = sections[currentSectionIndex];
-                    currentSection.classList.add('visible');
-                    
-                    // Scroll to the previous section
-                    currentSection.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'center'
-                    });
-                }
-            }
-            
-            async function submitAllAnswers() {
-                // Hide confirmation dialog
-                confirmDialog.classList.remove('visible');
-                
-                // Collect all data
-                const formData = {
-                    name: userName,
-                    timestamp: new Date(),
-                    answers: []
-                };
-                
-                // Get all questions and answers
-                document.querySelectorAll('.section[id^="question-"]').forEach(section => {
-                    const question = section.querySelector('.question-text').textContent;
-                    const answer = section.querySelector('textarea').value;
-                    
-                    formData.answers.push({
-                        question: question,
-                        answer: answer
-                    });
-                });
-                
-                try {
-                    const docRef = await addDoc(collection(db, "afrahResponses"), formData);
-                    console.log("Document written with ID: ", docRef.id);
-                    
-                    // Show confirmation
-                    alert(`My deepest gratitude, ${userName}. Your words are etched upon my heart.`);
-                    
-                    // Disable the submit button after submission
-                    submitAllBtn.disabled = true;
-                    submitAllBtn.textContent = 'Your words have found their home';
+    function showCurrentSection() {
+      sections.forEach((section, index) => {
+        if (index === currentSectionIndex) {
+          section.classList.add('visible');
+        } else {
+          section.classList.remove('visible');
+        }
+      });
+    }
 
-                navigateToSection(sections.length - 1); // or exact index
+    function setupEventListeners() {
+      // Audio setup
+      function enableAudioOnce() {
+        bgAudio.load();
+        bgAudio.play().catch(e => console.log("Audio play failed"));
+        document.removeEventListener('click', enableAudioOnce);
+        document.removeEventListener('keydown', enableAudioOnce);
+      }
+      document.addEventListener('click', enableAudioOnce);
+      document.addEventListener('keydown', enableAudioOnce);
 
-                } catch (e) {
-                    console.error("Error adding document: ", e);
-                    alert("Alas! The raven bearing thy message has gone astray. Please try again anon.");
-                }
-            }
+      // Name submit
+      nameSubmitBtn.addEventListener('click', function() {
+        if (nameInput.value.trim() === '') {
+          alert("Pray, grace me with your name to proceed.");
+          return;
+        }
+        userName = nameInput.value.trim();
+        personalGreeting.textContent = `My Dearest ${userName}`;
+        navigateToNextSection();
+      });
+
+      // Welcome continue
+      welcomeContinueBtn.addEventListener('click', navigateToNextSection);
+
+      // Ready buttons
+      readyYesBtn.addEventListener('click', navigateToNextSection);
+      readyNoBtn.addEventListener('click', function() {
+        alert("I shall await a more auspicious hour. Return when your heart is ready.");
+      });
+
+      // Question continue buttons
+      document.querySelectorAll('.btn-submit').forEach(button => {
+        button.addEventListener('click', function() {
+          const section = this.closest('.section');
+          const textarea = section.querySelector('textarea');
+          if (textarea.value.trim() === '') {
+            alert("I beseech you, share your thoughts ere we continue.");
+            return;
+          }
+          navigateToNextSection();
         });
-    </script>
+      });
+
+      // Back buttons
+      backButtons.forEach(button => {
+        button.addEventListener('click', navigateToPreviousSection);
+      });
+
+      // Submit all answers
+      submitAllBtn.addEventListener('click', function() {
+        confirmDialog.classList.add('visible');
+        confirmDialog.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      });
+
+      // Confirmation buttons
+      confirmYesBtn.addEventListener('click', submitAllAnswers);
+      confirmNoBtn.addEventListener('click', function() {
+        confirmDialog.classList.remove('visible');
+        // Find first unanswered question or last answered
+        let targetQuestion = 0;
+        for (let i = 0; i < textareas.length; i++) {
+          if (textareas[i].value.trim() === '') {
+            targetQuestion = i;
+            break;
+          }
+        }
+        if (targetQuestion === 0 && textareas[0].value.trim() !== '') {
+          targetQuestion = textareas.length - 1;
+        }
+        navigateToSection(3 + targetQuestion); // +3 for initial sections
+      });
+
+      // Textarea validation
+      textareas.forEach(textarea => {
+        textarea.addEventListener('input', function() {
+          const allAnswered = Array.from(textareas).every(ta => ta.value.trim() !== '');
+          submitAllBtn.disabled = !allAnswered;
+        });
+      });
+    }
+
+    function navigateToSection(index) {
+      if (index >= 0 && index < sections.length) {
+        currentSectionIndex = index;
+        showCurrentSection();
+        sections[currentSectionIndex].scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    }
+
+    function navigateToNextSection() {
+      if (currentSectionIndex < sections.length - 1) {
+        currentSectionIndex++;
+        showCurrentSection();
+        sections[currentSectionIndex].scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    }
+
+    function navigateToPreviousSection() {
+      if (currentSectionIndex > 0) {
+        currentSectionIndex--;
+        showCurrentSection();
+        sections[currentSectionIndex].scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    }
+
+    async function submitAllAnswers() {
+      confirmDialog.classList.remove('visible');
+      submitAllBtn.disabled = true;
+      submitAllBtn.textContent = 'Sending...';
+
+      const formData = {
+        name: userName,
+        timestamp: new Date(),
+        answers: []
+      };
+
+      // Get all questions and answers
+      for (let i = 3; i <= 8; i++) { // Questions are sections 3-8
+        const section = sections[i];
+        formData.answers.push({
+          question: section.querySelector('.question-text').textContent,
+          answer: section.querySelector('textarea').value
+        });
+      }
+
+      try {
+        await addDoc(collection(db, "afrahResponses"), formData);
+        navigateToSection(sections.length - 1); // Go to thank you section
+        submitAllBtn.textContent = 'Sent with love ❤️';
+      } catch (e) {
+        console.error("Error:", e);
+        alert("Alas! The message could not be sent. Please try again.");
+        submitAllBtn.disabled = false;
+        submitAllBtn.textContent = 'Seal With a Kiss';
+      }
+    }
+  });
+</script>
 </body>
 </html>
