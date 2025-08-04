@@ -336,31 +336,16 @@
 
    <!-- Firebase Integration & Form Logic -->
 <script type="module">
+  // ✅ Firebase imports
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
   import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  import { firebaseConfig } from './firebase-config.js'; // ✅ your masked config file
 
-  const firebaseConfig = {
-
-  apiKey: "AIzaSyATU9CGJ5vLxwbbfrZTL-3zqiUy4QNL2QE",
-
-  authDomain: "idontknowman-f4960.firebaseapp.com",
-
-  projectId: "idontknowman-f4960",
-
-  storageBucket: "idontknowman-f4960.firebasestorage.app",
-
-  messagingSenderId: "525670543641",
-
-  appId: "1:525670543641:web:b5d6279ee64cd4eddd1588",
-
-  measurementId: "G-JDK2WJNZ5P"
-
-};
-
-
+  // ✅ Initialize Firebase app and Firestore
   const app = initializeApp(firebaseConfig);
   const db = getFirestore(app);
 
+  // ✅ Everything else runs after DOM loads
   document.addEventListener('DOMContentLoaded', function () {
     const sections = document.querySelectorAll('.section');
     const beginBtn = document.getElementById('begin-btn');
@@ -441,7 +426,9 @@
   });
 </script>
 
+
 </body>
 </html>
+
 
 
