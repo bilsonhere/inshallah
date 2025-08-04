@@ -1,19 +1,23 @@
 export const firebaseConfig = {
-   apiKey: "AIzaSyCUWnVPUF4cM0e1AbKVHnk7HjD2VO9xRho",
 
-  authDomain: "fetch-56579.firebaseapp.com",
 
-  databaseURL: "https://fetch-56579-default-rtdb.firebaseio.com",
+  apiKey: "AIzaSyATU9CGJ5vLxwbbfrZTL-3zqiUy4QNL2QE",
 
-  projectId: "fetch-56579",
+  authDomain: "idontknowman-f4960.firebaseapp.com",
 
-  storageBucket: "fetch-56579.firebasestorage.app",
+  projectId: "idontknowman-f4960",
 
-  messagingSenderId: "1048781041087",
+  storageBucket: "idontknowman-f4960.firebasestorage.app",
 
-  appId: "1:1048781041087:web:c69453a8181239f999450a",
+  messagingSenderId: "525670543641",
 
-  measurementId: "G-8S6ESBBYH9"
+  appId: "1:525670543641:web:b5d6279ee64cd4eddd1588",
+
+  measurementId: "G-JDK2WJNZ5P"
+
+};
+
+
 
 
 
