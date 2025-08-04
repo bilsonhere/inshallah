@@ -15,7 +15,6 @@ export const firebaseConfig = {
 
   measurementId: "G-JDK2WJNZ5P"
 
-};
 
 
 
