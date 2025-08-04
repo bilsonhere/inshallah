@@ -571,17 +571,21 @@
 
 
     <script type="module">
-  // Firebase imports
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
   import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
   import { firebaseConfig } from './firebase-config.js';
 
   // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
-  const db = getFirestore(app);
+  let db;
+  try {
+    const app = initializeApp(firebaseConfig);
+    db = getFirestore(app);
+    console.log("✅ Firebase initialized.");
+  } catch (err) {
+    console.error("❌ Firebase initialization failed:", err);
+  }
 
-  document.addEventListener('DOMContentLoaded', function() {
-    // Get all sections in order
+  document.addEventListener('DOMContentLoaded', function () {
     const sections = [
       document.getElementById('name-section'),
       document.getElementById('welcome-section'),
@@ -596,7 +600,6 @@
       document.getElementById('thank-you-section')
     ];
 
-    // DOM elements
     const nameInput = document.getElementById('name');
     const nameSubmitBtn = document.getElementById('name-submit-btn');
     const personalGreeting = document.getElementById('personal-greeting');
@@ -611,37 +614,29 @@
     const backButtons = document.querySelectorAll('.btn-back');
     const bgAudio = document.getElementById('bg-audio');
 
-    // Track current section
     let currentSectionIndex = 0;
     let userName = '';
 
-    // Initialize
     showCurrentSection();
     setupEventListeners();
 
     function showCurrentSection() {
       sections.forEach((section, index) => {
-        if (index === currentSectionIndex) {
-          section.classList.add('visible');
-        } else {
-          section.classList.remove('visible');
-        }
+        section.classList.toggle('visible', index === currentSectionIndex);
       });
     }
 
     function setupEventListeners() {
-      // Audio setup
       function enableAudioOnce() {
         bgAudio.load();
-        bgAudio.play().catch(e => console.log("Audio play failed"));
+        bgAudio.play().catch(e => console.warn("Audio play failed:", e));
         document.removeEventListener('click', enableAudioOnce);
         document.removeEventListener('keydown', enableAudioOnce);
       }
       document.addEventListener('click', enableAudioOnce);
       document.addEventListener('keydown', enableAudioOnce);
 
-      // Name submit
-      nameSubmitBtn.addEventListener('click', function() {
+      nameSubmitBtn.addEventListener('click', function () {
         if (nameInput.value.trim() === '') {
           alert("Pray, grace me with your name to proceed.");
           return;
@@ -651,18 +646,12 @@
         navigateToNextSection();
       });
 
-      // Welcome continue
       welcomeContinueBtn.addEventListener('click', navigateToNextSection);
-
-      // Ready buttons
       readyYesBtn.addEventListener('click', navigateToNextSection);
-      readyNoBtn.addEventListener('click', function() {
-        alert("I shall await a more auspicious hour. Return when your heart is ready.");
-      });
+      readyNoBtn.addEventListener('click', () => alert("I shall await a more auspicious hour. Return when your heart is ready."));
 
-      // Question continue buttons
       document.querySelectorAll('.btn-submit').forEach(button => {
-        button.addEventListener('click', function() {
+        button.addEventListener('click', function () {
           const section = this.closest('.section');
           const textarea = section.querySelector('textarea');
           if (textarea.value.trim() === '') {
@@ -673,22 +662,16 @@
         });
       });
 
-      // Back buttons
-      backButtons.forEach(button => {
-        button.addEventListener('click', navigateToPreviousSection);
-      });
+      backButtons.forEach(button => button.addEventListener('click', navigateToPreviousSection));
 
-      // Submit all answers
-      submitAllBtn.addEventListener('click', function() {
+      submitAllBtn.addEventListener('click', function () {
         confirmDialog.classList.add('visible');
         confirmDialog.scrollIntoView({ behavior: 'smooth', block: 'center' });
       });
 
-      // Confirmation buttons
       confirmYesBtn.addEventListener('click', submitAllAnswers);
-      confirmNoBtn.addEventListener('click', function() {
+      confirmNoBtn.addEventListener('click', function () {
         confirmDialog.classList.remove('visible');
-        // Find first unanswered question or last answered
         let targetQuestion = 0;
         for (let i = 0; i < textareas.length; i++) {
           if (textareas[i].value.trim() === '') {
@@ -699,12 +682,11 @@
         if (targetQuestion === 0 && textareas[0].value.trim() !== '') {
           targetQuestion = textareas.length - 1;
         }
-        navigateToSection(3 + targetQuestion); // +3 for initial sections
+        navigateToSection(3 + targetQuestion);
       });
 
-      // Textarea validation
       textareas.forEach(textarea => {
-        textarea.addEventListener('input', function() {
+        textarea.addEventListener('input', function () {
           const allAnswered = Array.from(textareas).every(ta => ta.value.trim() !== '');
           submitAllBtn.disabled = !allAnswered;
         });
@@ -746,21 +728,29 @@
         answers: []
       };
 
-      // Get all questions and answers
-      for (let i = 3; i <= 8; i++) { // Questions are sections 3-8
+      for (let i = 3; i <= 8; i++) {
         const section = sections[i];
         formData.answers.push({
-          question: section.querySelector('.question-text').textContent,
-          answer: section.querySelector('textarea').value
+          question: section.querySelector('.question-text')?.textContent || `Question ${i - 2}`,
+          answer: section.querySelector('textarea')?.value.trim() || ''
         });
+      }
+
+      console.log("📤 Submitting formData to Firestore:", formData);
+
+      if (!db) {
+        alert("Firestore is not connected. Please check your Firebase configuration.");
+        submitAllBtn.disabled = false;
+        submitAllBtn.textContent = 'Seal With a Kiss';
+        return;
       }
 
       try {
         await addDoc(collection(db, "afrahResponses"), formData);
-        navigateToSection(sections.length - 1); // Go to thank you section
+        navigateToSection(sections.length - 1);
         submitAllBtn.textContent = 'Sent with love ❤️';
       } catch (e) {
-        console.error("Error:", e);
+        console.error("❌ Firestore submission error:", e);
         alert("Alas! The message could not be sent. Please try again.");
         submitAllBtn.disabled = false;
         submitAllBtn.textContent = 'Seal With a Kiss';
@@ -770,3 +760,4 @@
 </script>
 </body>
 </html>
+
