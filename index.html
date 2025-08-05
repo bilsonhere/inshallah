@@ -6,7 +6,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=IM+Fell+English:ital@0;1&family=IM+Fell+English+SC&display=swap" rel="stylesheet">
     <title>i can just wish</title>
     <style>
-        /* Base Styles */
+      
         :root {
             --parchment: #f5e9d9;
             --parchment-dark: #e8d9c5;
@@ -35,11 +35,11 @@
             background-attachment: fixed;
         }
 
-        /* Font Import */
+    
         @import url('https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=IM+Fell+English+SC&family=MedievalSharp&display=swap');
         @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap');
 
-        /* Layout */
+      
         .container {
             max-width: 800px;
             margin: 0 auto;
@@ -47,7 +47,7 @@
             min-height: 100vh;
         }
 
-        /* Header */
+
         header {
             text-align: center;
             margin-bottom: 3rem;
@@ -94,7 +94,7 @@
             font-style: italic;
         }
 
-        /* Wax Seal Effect */
+       
         .wax-seal {
             width: 80px;
             height: 80px;
@@ -118,7 +118,7 @@
             to { transform: scale(1) rotate(0); opacity: 1; }
         }
 
-        /* Sections */
+       
         .section {
             background-color: var(--parchment);
             border-radius: 8px;
@@ -152,7 +152,7 @@
             transform: translateY(0);
         }
 
-        /* Welcome Section */
+      
         #welcome-section {
             text-align: center;
             background: linear-gradient(to bottom, var(--romantic-pink), var(--parchment));
@@ -165,7 +165,6 @@
             margin-bottom: 1.5rem;
         }
 
-        /* Form Elements */
         .form-group {
             margin-bottom: 2rem;
             position: relative;
@@ -208,7 +207,7 @@
             box-shadow: 0 0 0 3px rgba(201, 166, 107, 0.2);
         }
 
-        /* Ready Check Section */
+       
         .ready-check {
             text-align: center;
             background: linear-gradient(to bottom, var(--soft-beige), var(--parchment));
@@ -266,7 +265,7 @@
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
         }
 
-        /* Buttons */
+    
         .btn {
             padding: 0.8rem 2rem;
             border: none;
@@ -331,7 +330,7 @@
             margin-top: 1.5rem;
         }
 
-        /* Question Text */
+    
         .question-text {
             font-family: 'IM Fell English SC', serif;
             font-size: 1.4rem;
@@ -350,7 +349,7 @@
             font-size: 1.8rem;
         }
 
-        /* Final Message */
+       
         .final-message {
             text-align: center;
             font-style: italic;
@@ -376,7 +375,6 @@
             animation: fadeIn 0.5s ease;
         }
 
-        /* Footer */
         footer {
             text-align: center;
             margin-top: 3rem;
@@ -401,7 +399,7 @@
             background: linear-gradient(90deg, transparent, var(--gold-accent), transparent);
         }
 
-        /* Animations */
+    
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
@@ -413,7 +411,6 @@
             100% { transform: scale(1); }
         }
 
-        /* Responsive Design */
         @media (max-width: 768px) {
             .container { padding: 1.5rem; }
             h1 { font-size: 2.2rem; }
@@ -439,12 +436,12 @@
 <body>
     <div class="container">
         <header>
-            <h1>If this the way that feels easier for you..</h1>
-            <div class="wax-seal">💖</div>
-            <p class="intro-text">With all the grace my heart could gather🎈</p>
+            <h1>If this is the way that feels easier for you...</h1>
+            <div class="wax-seal">A</div>
+            <p class="intro-text">🎈With all the grace my heart could gather🎈</p>
         </header>
 
-        <!-- Name Input Section -->
+        
         <div id="name-section" class="section visible">
             <div class="form-group">
                 <label for="name">Your Most Beloved Name:</label>
@@ -453,17 +450,17 @@
             <button id="name-submit-btn" class="btn btn-block" style="background-color: var(--royal-blue);">Present Thyself</button>
         </div>
 
-        <!-- Welcome Section -->
+      
         <div id="welcome-section" class="section">
             <div class="personal-greeting" id="personal-greeting">My Dearest Afrah</div>
             <div class="intro-text">
-                <p>I penned these words with trembling hand and hopeful heart, that might bridge what distance lies between us at the moment. All of this is because everything about this matters to me deeply. I am hoping to be understood. Also, forgive me if you will, for the clinginess in this. I am not sure if my heart will even ever get to do this again. </p>
+                <p>I penned these words with trembling hand and hopeful heart, that might bridge what distance lies between us at the moment. All of this is because absolutely everything about this matters to me deeply and I really really need this. I don't want to be left speculating all my life. I am hoping to be understood. Also, forgive me if you will, for the clinginess in this. I am not sure if my heart will even ever get to do this again. </p>
                 <p>Here lies a scroll of eleven questions from my heart to yours. Answer only what you will, in your own time.</p>
             </div>
             <button id="welcome-continue-btn" class="btn btn-block" style="background-color: var(--royal-blue);">Unfurl the Scroll</button>
         </div>
 
-        <!-- Ready Check Section -->
+      
         <div id="ready-section" class="section">
             <div class="ready-check">
                 <div class="question-text">Is your heart open to receive these words?</div>
@@ -475,7 +472,7 @@
                 </div>
             </div>
         </div>
-<!-- Question 1 -->
+
 <div id="question-1" class="section">
 <div class="question-text">So, hows the weathere there?</div>
 <textarea placeholder="MUST ANSWER"></textarea>
@@ -485,7 +482,7 @@
 </div>
 </div>
 
-<!-- Question 2 -->
+
 <div id="question-2" class="section">
 <div class="question-text">Did thou try popcorn chicken biryani?</div>
 <textarea placeholder="MUST ANSWER"></textarea>
@@ -503,7 +500,7 @@
 <button class="btn btn-submit">Continue →</button>
 </div>
 </div>
-<!-- Question 3 -->
+
 <div id="question-4" class="section">
 <div class="question-text">What gentle breeze hath carried thee away from me of late?</div>
 <textarea placeholder="You can skip this question if you want, type skip."></textarea>
@@ -513,7 +510,6 @@
 </div>
 </div>
 
-<!-- Question 4 -->
 <div id="question-5" class="section">
 <div class="question-text">Do thoughts of me e'er visit thy quiet moments?</div>
 <textarea placeholder="You can skip this question if you want, type skip."></textarea>
@@ -523,7 +519,7 @@
 </div>
 </div>
 
-<!-- Question 5 -->
+
 <div id="question-6" class="section">
 <div class="question-text">Have I wounded thee unknowingly with any word or deed?</div>
 <textarea placeholder="You can skip this question if you want, type skip."></textarea>
@@ -535,10 +531,7 @@
 
 
 
-<!-- Question 7 -->
 
-
-<!-- Question 8 -->
 <div id="question-7" class="section">
 <div class="question-text">Any truth wouldst thou like to share now, were thy heart utterly safe?</div>
 <textarea placeholder="You can skip this question if you want, type skip."></textarea>
@@ -548,7 +541,7 @@
 </div>
 </div>
 
-<!-- Question 10 -->
+
 <div id="question-8" class="section">
 <div class="question-text">Have my fears of thy new chapter lacking room for me cometh true?</div>
 <textarea placeholder="You can skip this question if you want, type skip."></textarea>
@@ -558,10 +551,10 @@
 </div>
 </div>
 
-<!-- Question 11 -->
+
 <div id="question-9" class="section">
 <div class="question-text">Doth our tale feel concluded to thee, or merely paused by time?</div>
-<textarea placeholder="I am sorry but I really need you to tell me this:( If it's a yes, a goodbye talk please? If it's a no, alhumduillah was never in doubt comeback soon queen i can wait decades"></textarea>
+<textarea placeholder="I am sorry but I really need you to tell me this:( If it's a yes, a goodbye talk please? If it's a no, alhumdulillah yay. was never in doubt comeback soon queen i can wait decades"></textarea>
 <div class="button-group">
 <button class="btn btn-back">← Retreat</button>
 <button class="btn btn-submit">Continue →</button>
@@ -576,7 +569,7 @@
 <button class="btn btn-submit">Continue →</button>
 </div>
 </div>
-<!-- Question 12 -->
+
 <div id="question-11" class="section">
 <div class="question-text">If this be Fi Amanillah, wouldst thou leave me a final line to fold into my silence?</div>
     <textarea placeholder="You can skip this question if you want, type skip."></textarea>
@@ -586,7 +579,7 @@
 </div>
 </div>
 
-        <!-- Final Message -->
+      
         <div id="final-section" class="section">
             <div class="final-message">
                 <p>You owe me no answers, beloved, yet each word would be more precious than gold.</p>
@@ -606,7 +599,7 @@
         </div>
 
         <footer>
-          🤍 Penned with trembling hand and hopeful heart 🤍
+          🤍 Hope is like a seed planted in the soil of our hearts 🤍
         </footer>
     </div>
 <div id="thank-you-section" class="section">
@@ -616,27 +609,26 @@
   </div>
 </div>
 <audio id="bg-audio" loop>
-    <!-- For FLAC files -->
+ 
     <source src="your-audio.flac" type="audio/flac">
     
-    <!-- Fallback for better browser compatibility -->
+  
     <source src="your-audio.mp3" type="audio/mpeg">
     
     Your browser does not support the audio element.
 </audio>
 
    <script type="module">
-  // Firebase imports
+  // firebase 
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
   import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
   import { firebaseConfig } from './firebase-config.js';
 
-  // Initialize Firebase
   const app = initializeApp(firebaseConfig);
   const db = getFirestore(app);
 
   document.addEventListener('DOMContentLoaded', function() {
-    // Get all sections dynamically
+  // dynamic
     const sectionIds = [
       'name-section', 'welcome-section', 'ready-section', 
       ...Array.from(document.querySelectorAll('[id^="question-"]')).map(q => q.id),
@@ -645,7 +637,7 @@
     
     const sections = sectionIds.map(id => document.getElementById(id));
 
-    // DOM elements
+ 
     const nameInput = document.getElementById('name');
     const nameSubmitBtn = document.getElementById('name-submit-btn');
     const personalGreeting = document.getElementById('personal-greeting');
@@ -660,11 +652,11 @@
     const backButtons = document.querySelectorAll('.btn-back');
     const bgAudio = document.getElementById('bg-audio');
 
-    // Track current section
+   
     let currentSectionIndex = 0;
     let userName = '';
 
-    // Initialize
+   
     showCurrentSection();
     setupEventListeners();
 
@@ -675,7 +667,7 @@
     }
 
     function setupEventListeners() {
-      // Audio setup
+     
       const enableAudioOnce = () => {
         bgAudio.play().catch(console.error);
         document.removeEventListener('click', enableAudioOnce);
@@ -684,7 +676,7 @@
       document.addEventListener('click', enableAudioOnce);
       document.addEventListener('keydown', enableAudioOnce);
 
-      // Name submit
+    
       nameSubmitBtn.addEventListener('click', () => {
         if (!nameInput.value.trim()) {
           alert("Pray, grace me with your name to proceed.");
@@ -695,12 +687,12 @@
         navigateToNextSection();
       });
 
-      // Navigation buttons
+  
       welcomeContinueBtn.addEventListener('click', navigateToNextSection);
       readyYesBtn.addEventListener('click', navigateToNextSection);
       readyNoBtn.addEventListener('click', () => alert("I shall await a more auspicious hour."));
 
-      // Question continue buttons
+     
       document.querySelectorAll('.btn-submit').forEach(btn => {
         btn.addEventListener('click', () => {
           const textarea = btn.closest('.section').querySelector('textarea');
@@ -712,10 +704,9 @@
         });
       });
 
-      // Back buttons
+   =
       backButtons.forEach(btn => btn.addEventListener('click', navigateToPreviousSection));
 
-      // Submit flow
       submitAllBtn.addEventListener('click', () => {
         confirmDialog.classList.add('visible');
         confirmDialog.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -728,7 +719,7 @@
         navigateToSection(3 + (firstUnanswered === -1 ? textareas.length - 1 : firstUnanswered));
       });
 
-      // Validate answers
+ 
       textareas.forEach(ta => {
         ta.addEventListener('input', () => {
           submitAllBtn.disabled = ![...textareas].every(t => t.value.trim());
@@ -778,6 +769,7 @@
 </script>
 </body>
 </html>
+
 
 
 
